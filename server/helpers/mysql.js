@@ -1,11 +1,11 @@
 'use-strict';
 const mysql = require('mysql2/promise');
 ((dbHelper) => {
-  let dbClient = null;
+  let connection = null;
   dbHelper.init = async () => {
     try {
-      if (!dbClient)
-        dbClient = await mysql.createPool({
+      if (!connection)
+        connection = await mysql.createPool({
           user: process.env.DB_USER,
           password: process.env.DB_PASSWORD,
           host: process.env.DB_HOST,
@@ -15,21 +15,21 @@ const mysql = require('mysql2/promise');
           connectionLimit: 10,
           queueLimit: 0,
         });
-      return dbClient;
+      return connection;
     } catch (err) {
       throw err;
     }
   };
   dbHelper.getConnection = async () => {
     try {
-      return await dbClient.getConnection();
+      return await connection.getConnection();
     } catch (error) {
       throw error;
     }
   };
-  dbHelper.releaseConnection = async (connection) => {
+  dbHelper.release = async (connection) => {
     try {
-      return await dbClient.releaseConnection(connection);
+      return await connection.release(connection);
     } catch (error) {
       throw error;
     }

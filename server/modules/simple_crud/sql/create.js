@@ -22,7 +22,7 @@
     } catch (error) {
       throw error;
     } finally {
-      if (connection) dbHelper.releaseConnection(connection);
+      if (connection) dbHelper.release(connection);
     }
   };
 })();
