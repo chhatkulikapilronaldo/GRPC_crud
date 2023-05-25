@@ -30,7 +30,9 @@ message UpdateRequest {
 }
 
 message ListResponse {
-    repeated Details data = 1;
+    repeated Details data = 1; 
+    string message=2;
+    int32 status =3;
 }
 
 message Details {
